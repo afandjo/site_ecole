@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: site_ecole
+    env: docker
+    plan: free
+    branch: main
+    region: oregon
+    buildCommand: ""
+    startCommand: apache2-foreground
