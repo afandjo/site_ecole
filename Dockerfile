@@ -1,42 +1,42 @@
+# Utilise l'image officielle PHP avec Apache
 FROM php:8.2-apache
 
-# Installer les dépendances système
+# Installe les extensions PHP nécessaires
 RUN apt-get update && apt-get install -y \
-    zip unzip git curl libzip-dev libpng-dev libonig-dev libxml2-dev \
-    && docker-php-ext-install pdo_mysql zip
+    libpng-dev libonig-dev libxml2-dev zip unzip curl git \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-# Activer mod_rewrite
+# Active mod_rewrite pour Laravel
 RUN a2enmod rewrite
 
-# Copier les fichiers Laravel dans le bon dossier
+# Copie tout le projet dans le conteneur
 COPY . /var/www/html
 
-# Définir les permissions correctes
+# Définit le dossier de travail
+WORKDIR /var/www/html
+
+# Fixe les permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
-# Changer le répertoire de travail
-WORKDIR /var/www/html
+# ➕ Configure Apache pour pointer vers /public
+RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 
-# Installer Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Installer les dépendances PHP
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
-
-# Activer index.php par défaut
-RUN sed -i 's|DirectoryIndex .*|DirectoryIndex index.php|g' /etc/apache2/apache2.conf
-
-# Configurer Apache pour Laravel
+# Ajoute configuration de droits pour le dossier public
 RUN echo '<Directory /var/www/html/public>\n\
-    Options Indexes FollowSymLinks\n\
     AllowOverride All\n\
     Require all granted\n\
-</Directory>' > /etc/apache2/conf-available/laravel.conf && \
-    a2enconf laravel
+</Directory>' > /etc/apache2/conf-available/laravel.conf \
+    && a2enconf laravel
 
-# Exposer le port 80
+# Installe Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Installe les dépendances Laravel
+RUN composer install --no-interaction --optimize-autoloader --no-dev
+
+# Ouvre le port 80
 EXPOSE 80
 
-# Commande de démarrage
+# Lancement d'Apache
 CMD ["apache2-foreground"]
