@@ -1,28 +1,24 @@
-# Utilise l'image officielle PHP avec Apache
+# Utilise PHP avec Apache
 FROM php:8.2-apache
 
-# Installe les extensions PHP nécessaires
+# Installer les dépendances PHP
 RUN apt-get update && apt-get install -y \
     libpng-dev libonig-dev libxml2-dev zip unzip curl git \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-# Active mod_rewrite pour Laravel
+# Active le module rewrite d’Apache
 RUN a2enmod rewrite
 
-# Copie tout le projet dans le conteneur
+# Copie les fichiers Laravel dans le conteneur
 COPY . /var/www/html
 
-# Définit le dossier de travail
+# Définit le répertoire de travail
 WORKDIR /var/www/html
 
-# Fixe les permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
-
-# ➕ Configure Apache pour pointer vers /public
+# Fixe le bon dossier racine Apache : public
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 
-# Ajoute configuration de droits pour le dossier public
+# Ajoute la configuration pour autoriser .htaccess dans /public
 RUN echo '<Directory /var/www/html/public>\n\
     AllowOverride All\n\
     Require all granted\n\
@@ -38,5 +34,5 @@ RUN composer install --no-interaction --optimize-autoloader --no-dev
 # Ouvre le port 80
 EXPOSE 80
 
-# Lancement d'Apache
+# Lance Apache
 CMD ["apache2-foreground"]
