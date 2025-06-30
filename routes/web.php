@@ -17,6 +17,10 @@ use App\Models\Enseignant;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function () {
+    return redirect()->route('eleves.step');
+});
+
 Route::get('/', [EleveController::class, 'showStep1'])->name('eleves.step1');
 Route::post('/etape1', [EleveController::class, 'postStep1'])->name('eleves.step1.post');
 Route::get('/etape2', [EleveController::class, 'showStep2'])->name('eleves.step2');
