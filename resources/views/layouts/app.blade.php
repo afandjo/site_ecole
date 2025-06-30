@@ -38,22 +38,18 @@
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('eleves.step1') }}">Inscription</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('eleves.connexion.form') }}">Connexion</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        Administrateur
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ route('admin.enseignants') }}">Enseignants</a></li>
-                        <li><a class="dropdown-item" href="{{ route('admin.login') }}">Administrateur principal</a></li>
-                    </ul>
-                </li>
-            </ul>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('eleves.step1') }}">Inscription</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('eleves.connexion.form') }}">Connexion</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.enseignants') }}">Enseignants</a>
+    </li>
+
+</ul>
+
         </div>
     </div>
 </nav>

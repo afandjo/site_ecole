@@ -225,4 +225,26 @@ public function exportClassementPDF()
     $pdf = Pdf::loadView('admin.classement_pdf', compact('elevesParClasse'));
     return $pdf->download('classement_eleves.pdf');
 }
+public function showValidations()
+{
+    $elevesParClasse = Eleve::orderBy('classe') // trie les classes
+        ->orderBy('nom') // trie les élèves par nom
+        ->get()
+        ->groupBy('classe'); // regroupe les élèves par classe
+
+    return view('admin.validations', compact('elevesParClasse'));
+}
+
+
+public function validerEtape(Eleve $eleve, $etape)
+{
+    if (in_array($etape, ['inscription_validee', 'tranche1_validee', 'tranche2_validee', 'tranche3_validee'])) {
+        $eleve->$etape = true;
+$eleve->save();
+
+    }
+
+    return back()->with('success', 'Étape validée avec succès.');
+}
+
 }

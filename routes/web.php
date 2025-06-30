@@ -126,3 +126,9 @@ Route::post('/admin/enseignants/{id}/valider', [EnseignantController::class, 'va
 //Route des moyennes
 Route::get('/admin/classement', [AdminController::class, 'classement'])->name('admin.classement');
 
+// Affiche la liste des élèves à valider
+Route::get('/admin/validations', [AdminController::class, 'showValidations'])->name('admin.validations');
+
+// Valide une étape spécifique (via formulaire)
+Route::post('/admin/valider-etape/{eleve}/{etape}', [AdminController::class, 'validerEtape'])->name('admin.valider.etape');
+Route::get('/admin/validations', [AdminController::class, 'showValidations'])->name('admin.validations');

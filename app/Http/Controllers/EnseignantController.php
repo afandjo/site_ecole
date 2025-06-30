@@ -74,10 +74,10 @@ class EnseignantController extends Controller
 
        public function dashboard()
 {
-    // ✅ Récupère l’enseignant connecté via l’ID stocké dans la session
+    // Récupère l’enseignant connecté via l’ID stocké dans la session
     $enseignant = Enseignant::find(session('enseignant_id'));
 
-    // ✅ Récupère uniquement les notes de cet enseignant
+    // Récupère uniquement les notes de cet enseignant
     $eleves = Eleve::with(['notes' => function ($query) use ($enseignant) {
         $query->where('enseignant_id', $enseignant->id);
     }])

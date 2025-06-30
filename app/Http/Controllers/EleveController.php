@@ -64,7 +64,7 @@ class EleveController extends Controller
             $request->validate([
                 'etablissement_prevenance' => 'required|string|max:255',
                 'num_table' => 'required|string|max:50',
-                'moyenne_cepd' => 'required|numeric|min:0|max:20',
+                'moyenne_cepd' => 'required|numeric|min:0|max:180',
             ]);
         } else {
             $request->validate([
@@ -112,7 +112,7 @@ class EleveController extends Controller
     public function espace()
 {
     $eleve = Eleve::with('notes')->find(session('eleve_id'));
-
+        
     if (!$eleve) {
         return redirect()->route('eleves.connexion.form');
     }

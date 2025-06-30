@@ -21,13 +21,16 @@
 
 
     <div class="mb-4 d-flex flex-wrap gap-2">
-        <a href="{{ route('admin.eleves.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> Ajouter Élève
-        </a>
-        <a href="{{ route('admin.enseignants.create') }}" class="btn btn-success">
-            <i class="bi bi-plus-circle"></i> Ajouter Enseignant
-        </a>
-    </div>
+    <a href="{{ route('admin.eleves.create') }}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Ajouter Élève
+    </a>
+    <a href="{{ route('admin.enseignants.create') }}" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Ajouter Enseignant
+    </a>
+    <a href="{{ route('admin.validations') }}" class="btn btn-danger">
+        <i class="bi bi-check-circle"></i> Validation des élèves
+    </a>
+</div>
 
 
     <h4>Liste des Élèves</h4>
@@ -138,7 +141,7 @@
             @endforeach
         </tbody>
     </table>
-        <h2 class="text-2xl font-bold mb-4">Classement des élèves</h2>
+        <h2 class="text-2xl font-bold mb-4">Classement des élèves par ordre decroissant de la moyenne trimestrièl.</h2>
 
 @foreach ($elevesParClasse as $classe => $eleves)
     <h3 class="text-xl font-semibold mt-6 mb-2">Classe : {{ $classe }}</h3>
@@ -162,15 +165,15 @@
             @endforeach
         </tbody>
     </table>
-    <a href="{{ route('admin.classement.pdf') }}" class="bg-blue-600 text-white px-4 py-2 rounded">📄 Télécharger PDF</a>
+    <a href="{{ route('admin.classement.pdf') }}" class="bi bi-file-earmark-pdf-fill me-1">Télécharger PDF</a>
 @endforeach
 
     <div class="my-4">
-        <h5>Télécharger les listes en PDF :</h5>
+        <h5>Télécharger les listes des Eleves ou des Enseignants en PDF :</h5>
         <div class="d-flex flex-wrap gap-2">
             @foreach(['6ème', '5ème', '4ème', '3ème'] as $classe)
                 <a href="{{ route('admin.telecharger.pdf', ['classe' => $classe]) }}" class="btn btn-outline-primary">
-                    <i class="bi bi-file-earmark-pdf-fill me-1"></i> Liste des {{ $classe }}
+                    <i class="bi bi-file-earmark-pdf-fill me-1"></i> Liste de la classe de {{ $classe }}
                 </a>
             @endforeach
             <a href="{{ route('admin.enseignants.pdf') }}" class="btn btn-outline-success">

@@ -20,7 +20,7 @@ class CodeConnexionEnseignant extends Mailable
 
     public function build()
     {
-        return $this->from('tekorolandafandjo94@gmail.com', 'École Sainte Famille')
+        return $this->from('tekorolandafandjo94@gmail.com', 'École Sainte Azor')
             ->subject('Validation de votre enregistrement')
             ->markdown('emails.code_connexion')
             ->with('enseignant', $this->enseignant);

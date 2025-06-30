@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Espace Élève</h1>
+    
     <h2>Bienvenue {{ $eleve->prenom }} {{ $eleve->nom }}</h2>
 
     {{-- Informations personnelles --}}
@@ -27,6 +27,41 @@
             @endif
         </div>
     </div>
+        <div class="d-flex gap-3 mt-4">
+    {{-- Inscription --}}
+    <div class="rounded-circle d-flex justify-content-center align-items-center"
+         style="width: 50px; height: 50px; background-color:
+            {{ $eleve->inscription_validee ? 'green' : ($eleve->inscription_en_cours ? 'yellow' : 'red') }};
+            color: white;">
+        Inscription
+    </div>
+
+    {{-- 1ère Tranche --}}
+    <div class="rounded-circle d-flex justify-content-center align-items-center"
+         style="width: 50px; height: 50px; background-color:
+            {{ $eleve->tranche1_validee ? 'green' : 'red' }};
+            color: white;">
+        1ère Tranche
+    </div>
+
+    {{-- 2ème Tranche --}}
+    <div class="rounded-circle d-flex justify-content-center align-items-center"
+         style="width: 50px; height: 50px; background-color:
+            {{ $eleve->tranche2_validee ? 'green' : 'red' }};
+            color: white;">
+        2ème Tranche
+    </div>
+
+    {{-- 3ème Tranche --}}
+    <div class="rounded-circle d-flex justify-content-center align-items-center"
+         style="width: 50px; height: 50px; background-color:
+            {{ $eleve->tranche3_validee ? 'green' : 'red' }};
+            color: white;">
+        3ème Tranche
+    </div>
+</div>
+
+</div>
 
     {{-- Tableau des notes --}}
     <div class="card mt-4">
@@ -68,21 +103,30 @@
     </div>
         <div class="text-center my-4">
     <h3>Votre moyenne trimestrielle est :</h3>
-    <h1 class="text-4xl font-bold">{{ $eleve->moyenne ?? 'Non disponible' }}/20</h1>
+<h1 class="text-4xl font-bold">{{ $eleve->moyenne ?? 'Non disponible' }}/20</h1>
 
-    @if($eleve->moyenne !== null)
-        @if($eleve->moyenne >= 10)
-            <div class="flex flex-col items-center mt-4">
-                <div class="w-16 h-16 rounded-full bg-green-500"></div>
-                <span class="text-green-700 font-semibold mt-2">Réussite</span>
-            </div>
-        @elseif($eleve->moyenne <= 9)
-            <div class="flex flex-col items-center mt-4">
-                <div class="w-16 h-16 rounded-full bg-red-500"></div>
-                <span class="text-red-700 font-semibold mt-2">Échec</span>
-            </div>
-        @endif
+@if($eleve->moyenne !== null)
+    <p>Votre moyenne trimestrielle est : {{ $eleve->moyenne }}</p>
+
+    @if($eleve->moyenne <= 9)
+        <div style="color: red;">🔴 Échoué</div>
+    @elseif($eleve->moyenne >= 10)
+        <div style="color: green;">🟢 Réussi</div>
     @endif
+@endif
+@if($eleve->moyenne_annuelle !== null)
+    <h1 class="text-4xl font-bold">{{ $eleve->moyenne_annuelle }}/20</h1>
+    @if($eleve->moyenne_annuelle <= 9)
+        <div style="color: red; font-size: 20px;">🔴 Redouble la classe</div>
+    @elseif($eleve->moyenne_annuelle >= 10)
+        <div style="color: green; font-size: 20px;">🟢 Passe à la classe supérieure</div>
+    @endif
+@else
+    <p>Moyenne annuelle non disponible</p>
+@endif
+
+
+
 </div>
 
     <a href="{{ route('eleves.deconnexion') }}" class="btn btn-danger mt-3">Se déconnecter</a>
