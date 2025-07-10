@@ -13,23 +13,37 @@ services:
         value: false
       - key: APP_KEY
         generateValue: true
+      - key: APP_URL
+        value: https://site-ecole-s37e.onrender.com
+
+      # Configuration MySQL DB4Free
       - key: DB_CONNECTION
         value: mysql
       - key: DB_HOST
-        fromDatabase:
-          name: site-ecole-db
-          property: host
+        value: db4free.net
       - key: DB_PORT
         value: 3306
       - key: DB_DATABASE
-        fromDatabase:
-          name: site-ecole-db
-          property: database
+        value: site_ecol
       - key: DB_USERNAME
-        fromDatabase:
-          name: site-ecole-db
-          property: user
+        value: afandjo
       - key: DB_PASSWORD
-        fromDatabase:
-          name: site-ecole-db
-          property: password
+        value: Ecole2025@
+
+      # Configuration mail
+      - key: MAIL_MAILER
+        value: smtp
+      - key: MAIL_HOST
+        value: smtp.gmail.com
+      - key: MAIL_PORT
+        value: 587
+      - key: MAIL_USERNAME
+        value: tekorolandafandjo94@gmail.com
+      - key: MAIL_PASSWORD
+        value: nacy nrss jrpv gxbi
+      - key: MAIL_ENCRYPTION
+        value: tls
+      - key: MAIL_FROM_ADDRESS
+        value: tekorolandafandjo94@gmail.com
+      - key: MAIL_FROM_NAME
+        value: "École Sainte Famille"
