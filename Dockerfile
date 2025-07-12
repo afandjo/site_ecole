@@ -27,10 +27,7 @@ RUN composer install --no-interaction --prefer-dist --optimize-autoloader \
     && php artisan config:clear \
     && php artisan route:clear \
     && php artisan view:clear \
-    && php artisan key:generate \
     && php artisan migrate --force
-RUN php artisan config:clear && php artisan config:cache
-
 
 # Étape 9 : Lancer Apache en mode foreground
 CMD ["apache2-foreground"]
