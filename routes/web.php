@@ -136,3 +136,4 @@ Route::get('/admin/validations', [AdminController::class, 'showValidations'])->n
 // Valide une étape spécifique (via formulaire)
 Route::post('/admin/valider-etape/{eleve}/{etape}', [AdminController::class, 'validerEtape'])->name('admin.valider.etape');
 Route::get('/admin/validations', [AdminController::class, 'showValidations'])->name('admin.validations');
+

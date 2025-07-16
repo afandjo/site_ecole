@@ -143,5 +143,7 @@ return [
         ],
 
     ],
+    'strict' => false,
+
 
 ];
