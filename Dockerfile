@@ -37,12 +37,13 @@ RUN chown -R www-data:www-data /var/www \
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader \
     && php artisan config:clear \
     && php artisan route:clear \
-    && php artisan view:clear \
-    && php artisan migrate --force
-#    && php artisan migrate --force  ← supprimée temporairement
+    && php artisan view:clear
 
-# Étape 9 : Exposer le port
+# Donner la permission d'exécuter start.sh
+RUN chmod +x start.sh
+
+# Exposer le port 8000
 EXPOSE 8000
 
-# Étape 10 : Commande de démarrage
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+# Commande de démarrage : lance start.sh
+CMD ["./start.sh"]
