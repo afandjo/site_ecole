@@ -37,7 +37,8 @@ RUN chown -R www-data:www-data /var/www \
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader \
     && php artisan config:clear \
     && php artisan route:clear \
-    && php artisan view:clear
+    && php artisan view:clear \
+    && php artisan migrate --force
 #    && php artisan migrate --force  ← supprimée temporairement
 
 # Étape 9 : Exposer le port
